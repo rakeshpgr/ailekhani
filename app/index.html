@@ -706,7 +706,7 @@ code{font-family:'JetBrains Mono',monospace;font-size:0.85em;background:var(--bg
           <div class="gh-input-row">
             <input type="text" id="gemini-key-input"
               placeholder="Paste your Gemini key here (AIza…)"
-              oninput="onGeminiKeyInput(this.value)"
+              oninput="onGeminiKeyInput(event)"
               onpaste="setTimeout(()=>onGeminiKeyInput(this.value),10)"
               onchange="onGeminiKeyInput(this.value)"
               autocomplete="off" spellcheck="false"/>
