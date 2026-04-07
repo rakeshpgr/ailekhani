@@ -77,6 +77,15 @@ function toast(message, type = 'info') {
     alert(message);
   }
 }
+
+// ✅ ADD HERE
+function onGeminiKeyInput(e) {
+  const value = e.target.value;
+  localStorage.setItem('gemini_api_key', value);
+  console.log("Gemini key saved");
+}
+
+
 // ── Handle OAuth callback (called on page load) ───────
 async function handleOAuthCallback() {
   const params = new URLSearchParams(window.location.search);
