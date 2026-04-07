@@ -138,27 +138,14 @@ async function handleOAuthCallback() {
       loggedInAt: new Date().toISOString()
     };
 
-   saveUser(user);
-showAuthLoading(false);
-updateAuthUI();
-
-// 🚀 Decide where to go
-setTimeout(() => {
-  if (data.isNew) {
-    // 👉 Show onboarding
-    document.getElementById('signin-screen').style.display = 'none';
-    document.getElementById('onboarding-screen').classList.remove('hidden');
-    document.getElementById('topbar').style.display = 'none';
-    document.getElementById('app').style.display = 'none';
-  } else {
-    // 👉 Go to main app
-    document.getElementById('signin-screen').style.display = 'none';
-    document.getElementById('onboarding-screen').classList.add('hidden');
-    document.getElementById('topbar').style.display = 'flex';
-    document.getElementById('app').style.display = 'flex';
-  }
-}, 300);
-
+    saveUser(user);
+    showAuthLoading(false);
+    updateAuthUI();
+ 
+  // 🚀 Always move forward after login
+   setTimeout(() => {
+  window.location.href = '/app/index.html'; // or your next page}, 300);
+    
  // ✅ Safe toast usage
     if (data.isNew) {
       toast(`Welcome to AI Lekhani! Your account is ready.`);
