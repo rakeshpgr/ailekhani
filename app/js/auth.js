@@ -159,7 +159,7 @@ setTimeout(() => {
   }
 }, 300);
 
-    
+
  // ✅ Safe toast usage
     if (data.isNew) {
       toast(`Welcome to AI Lekhani! Your account is ready.`);
