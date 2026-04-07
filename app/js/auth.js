@@ -338,31 +338,20 @@ async function initAuth() {
   }
   const user = getUser();
   if (!user) {
-    // 👉 Show sign-in screen
     document.getElementById('signin-screen').style.display = 'flex';
     document.getElementById('onboarding-screen').classList.add('hidden');
     document.getElementById('topbar').style.display = 'none';
     document.getElementById('app').style.display = 'none';
   } else {
-    // 👉 Existing user → skip onboarding
     document.getElementById('signin-screen').style.display = 'none';
     document.getElementById('onboarding-screen').classList.add('hidden');
     document.getElementById('topbar').style.display = 'flex';
     document.getElementById('app').style.display = 'flex';
   }
+  // ✅ keep everything INSIDE function
   trackVisit();
   updateAuthUI();
   updateStatsDisplay();
-}
-  // Track this visit
-  trackVisit();
-
-  // Update UI
-  updateAuthUI();
-  updateStatsDisplay();
-
-  // Signal to app/index.html that auth is ready
-  // This triggers the boot sequence which decides what screen to show
   if (typeof window.onAuthReady === 'function') {
     window.onAuthReady();
   }
