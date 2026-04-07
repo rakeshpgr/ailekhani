@@ -9,7 +9,7 @@
 // ── Config ────────────────────────────────────────────
 // Replace GOOGLE_CLIENT_ID with your actual Client ID from
 // Google Cloud Console → APIs & Services → Credentials
-const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID_HERE';
+const GOOGLE_CLIENT_ID = '914285653377-i0mttb01b7008g42l4q6h8vq9ggka8k4.apps.googleusercontent.com';
 const REDIRECT_URI     = window.location.origin + '/app/';
 const AUTH_ENDPOINT    = '/.netlify/functions/auth/google';
 const STATS_ENDPOINT   = '/.netlify/functions/auth/stats';
