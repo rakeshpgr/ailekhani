@@ -661,6 +661,8 @@ code{font-family:'JetBrains Mono',monospace;font-size:0.85em;background:var(--bg
             <input type="text" id="gemini-key-input"
               placeholder="Paste your Gemini key here (AIza…)"
               oninput="onGeminiKeyInput(this.value)"
+              onpaste="setTimeout(()=>onGeminiKeyInput(this.value),10)"
+              onchange="onGeminiKeyInput(this.value)"
               autocomplete="off" spellcheck="false"/>
             <button id="gemini-go-btn" onclick="startWithGemini()" disabled>
               Start Writing →
@@ -1297,12 +1299,12 @@ function onGeminiKeyInput(val){
 
   if(!val){st.textContent='';st.className='gh-status';btn.disabled=true;return;}
 
-  if(val.trim().startsWith('AIza') && val.trim().length > 20){
-    st.textContent='✓ Key looks correct — ready to write';
+  if(val.trim().length > 15){
+    st.textContent='✓ Key entered — ready to write';
     st.className='gh-status valid';
     btn.disabled=false;
-  } else if(val.trim().length > 8){
-    st.textContent='Gemini keys start with "AIza" — double-check your copy';
+  } else if(val.trim().length > 4){
+    st.textContent='Key looks too short — paste the full key';
     st.className='gh-status invalid';
     btn.disabled=true;
   } else {
@@ -1408,17 +1410,24 @@ function finishOnboarding(){
 
 // ── Skip — add key later ──────────────────────────────────────────
 function obSkip(){
-  // Default to Gemini if no key set — prompt will guide them to Settings
-  if(!Object.values(S.keys).some(k=>k&&k.trim())){
-    S.activeProvider = 'gemini';
+  try {
+    if(!Object.values(S.keys).some(k=>k&&k.trim())){
+      S.activeProvider = 'gemini';
+    }
+    S.writingLang = 'en';
+    S.inputLang   = 'en';
+    S.onboarded   = true;
+    save();
+    showApp();
+    setTimeout(()=>toast('Add a Gemini key in ⚙ Settings to start writing (it\'s free!)'), 1200);
+  } catch(e) {
+    console.error('obSkip error:', e);
+    // Force show app even if something fails
+    document.getElementById('onboarding-screen').classList.add('hidden');
+    document.getElementById('topbar').style.display = 'flex';
+    document.getElementById('app').style.display = 'flex';
+    try { renderApp(); } catch(e2) { console.error('renderApp error:', e2); }
   }
-  S.writingLang = 'en';
-  S.inputLang   = 'en';
-  S.onboarded   = true;
-  save();
-  showApp();
-  // Show a gentle nudge after app loads
-  setTimeout(()=>toast('Add a Gemini key in ⚙ Settings to start writing (it\'s free!)'), 1200);
 }
 
 
