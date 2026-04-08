@@ -68,6 +68,8 @@ function loginWithGoogle() {
 
   window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params}`;
 }
+
+
 // ✅ Safe toast fallback (prevents crash)
 function toast(message, type = 'info') {
   console.log(`[${type.toUpperCase()}]`, message);
@@ -78,6 +80,7 @@ function toast(message, type = 'info') {
   }
 }
 
+
 function initGeminiKey() {
   const key = localStorage.getItem('gemini_api_key') || '';
 
@@ -87,15 +90,26 @@ function initGeminiKey() {
   if (input) input.value = key;
   if (btn) btn.disabled = key.length < 10;
 }
+
+
 // ✅ ADD HERE
 function onGeminiKeyInput(e) {
   const value = e.target.value.trim();
-  // Save key
+
   localStorage.setItem('gemini_api_key', value);
-  // Enable button
-  const btn = document.getElementById('start-writing-btn');
-  if (btn) {
-    btn.disabled = value.length < 10;
+
+  const btn = document.getElementById('gemini-go-btn');
+  const status = document.getElementById('gemini-key-status');
+
+  const isValid = value.startsWith('AIza') && value.length > 20;
+
+  if (btn) btn.disabled = !isValid;
+
+  if (status) {
+    status.textContent = isValid
+      ? "✓ Valid API key"
+      : "Invalid key format";
+    status.className = "gh-status " + (isValid ? "valid" : "invalid");
   }
 }
 
