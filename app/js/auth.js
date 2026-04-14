@@ -2,7 +2,7 @@
 // ailekhani/app/js/auth.js
 // Google OAuth login — PKCE flow (browser-safe, no secret exposed)
 // Stores: Gmail ID, country, plan in localStorage
-// All actual auth happens in netlify/functions/auth.js
+// All actual auth happens in netlify/functions/auth.js....
 // ─────────────────────────────────────────────────────
 'use strict';
 
