@@ -1321,17 +1321,18 @@ function bootApp() {
 // Wait for auth.js to finish initialising before booting
 // auth.js calls initAuth() on DOMContentLoaded which loads user from storage
 // and handles OAuth callback — we hook in after that
-window.onAuthReady = function() { bootApp(); };
-
-// Fallback: if onAuthReady is not called within 1s, boot anyway
-setTimeout(() => {
-  if (document.getElementById('signin-screen').style.display !== 'none' ||
-      document.getElementById('onboarding-screen').classList.contains('hidden') === false ||
-      document.getElementById('app').style.display !== 'none') {
-    return; // already booted
-  }
+let _authReadyCalled = false;
+window.onAuthReady = function() {
+  _authReadyCalled = true;
   bootApp();
-}, 1000);
+};
+
+// Fallback: only fires if onAuthReady was never called (e.g. auth.js failed to load).
+// 5s gives the OAuth callback enough time to complete its network calls.
+setTimeout(() => {
+  if (_authReadyCalled) return;
+  bootApp();
+}, 5000);
 
 function showSignInScreen(){
   document.getElementById('signin-screen').style.display = 'flex';
